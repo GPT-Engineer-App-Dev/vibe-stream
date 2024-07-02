@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, Package2 } from "lucide-react";
+import { CircleUser, Menu, Music } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
 
@@ -26,6 +26,7 @@ const Layout = () => {
         <main className="flex-grow p-4 overflow-auto">
           <Outlet />
         </main>
+        <Footer />
       </div>
     </div>
   );
@@ -36,8 +37,8 @@ const Sidebar = () => (
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <NavLink to="/" className="flex items-center gap-2 font-semibold">
-          <Package2 className="h-6 w-6" />
-          <span>Acme Inc</span>
+          <Music className="h-6 w-6" />
+          <span>Music Stream</span>
         </NavLink>
       </div>
       <div className="flex-1">
@@ -49,6 +50,14 @@ const Sidebar = () => (
             </SidebarNavLink>
           ))}
         </nav>
+        <div className="mt-4 px-2 lg:px-4">
+          <h3 className="text-xs font-semibold uppercase text-muted-foreground">Playlists</h3>
+          <ul className="mt-2 space-y-1">
+            <li><NavLink to="/playlist/1" className="text-sm">My Playlist 1</NavLink></li>
+            <li><NavLink to="/playlist/2" className="text-sm">My Playlist 2</NavLink></li>
+            <li><NavLink to="/playlist/3" className="text-sm">My Playlist 3</NavLink></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -68,8 +77,8 @@ const MobileSidebar = () => (
           to="/"
           className="flex items-center gap-2 text-lg font-semibold mb-4"
         >
-          <Package2 className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
+          <Music className="h-6 w-6" />
+          <span className="sr-only">Music Stream</span>
         </NavLink>
         {navItems.map((item) => (
           <SidebarNavLink key={item.to} to={item.to}>
@@ -112,6 +121,36 @@ const SidebarNavLink = ({ to, children }) => (
   >
     {children}
   </NavLink>
+);
+
+const Footer = () => (
+  <footer className="flex items-center justify-between p-4 border-t bg-muted/40">
+    <div className="flex items-center gap-4">
+      <Button variant="outline" size="icon">
+        <Music className="h-5 w-5" />
+      </Button>
+      <div className="flex flex-col">
+        <span className="text-sm font-semibold">Song Title</span>
+        <span className="text-xs text-muted-foreground">Artist Name</span>
+      </div>
+    </div>
+    <div className="flex items-center gap-4">
+      <Button variant="outline" size="icon">
+        <Music className="h-5 w-5" />
+      </Button>
+      <Button variant="outline" size="icon">
+        <Music className="h-5 w-5" />
+      </Button>
+      <Button variant="outline" size="icon">
+        <Music className="h-5 w-5" />
+      </Button>
+    </div>
+    <div className="flex items-center gap-4">
+      <Button variant="outline" size="icon">
+        <Music className="h-5 w-5" />
+      </Button>
+    </div>
+  </footer>
 );
 
 export default Layout;
