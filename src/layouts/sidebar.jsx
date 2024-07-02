@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,9 +17,19 @@ import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
 
 const Layout = () => {
+  const [playlists, setPlaylists] = useState(["My Playlist 1", "My Playlist 2", "My Playlist 3"]);
+  const [newPlaylistName, setNewPlaylistName] = useState("");
+
+  const handleCreatePlaylist = () => {
+    if (newPlaylistName.trim()) {
+      setPlaylists([...playlists, newPlaylistName.trim()]);
+      setNewPlaylistName("");
+    }
+  };
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <Sidebar />
+      <Sidebar playlists={playlists} newPlaylistName={newPlaylistName} setNewPlaylistName={setNewPlaylistName} handleCreatePlaylist={handleCreatePlaylist} />
       <div className="flex flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <MobileSidebar />
@@ -32,7 +45,7 @@ const Layout = () => {
   );
 };
 
-const Sidebar = () => (
+const Sidebar = ({ playlists, newPlaylistName, setNewPlaylistName, handleCreatePlaylist }) => (
   <div className="hidden border-r bg-muted/40 md:block">
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -53,10 +66,29 @@ const Sidebar = () => (
         <div className="mt-4 px-2 lg:px-4">
           <h3 className="text-xs font-semibold uppercase text-muted-foreground">Playlists</h3>
           <ul className="mt-2 space-y-1">
-            <li><NavLink to="/playlist/1" className="text-sm">My Playlist 1</NavLink></li>
-            <li><NavLink to="/playlist/2" className="text-sm">My Playlist 2</NavLink></li>
-            <li><NavLink to="/playlist/3" className="text-sm">My Playlist 3</NavLink></li>
+            {playlists.map((playlist, index) => (
+              <li key={index}><NavLink to={`/playlist/${index + 1}`} className="text-sm">{playlist}</NavLink></li>
+            ))}
           </ul>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="mt-2">Create Playlist</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New Playlist</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={(e) => { e.preventDefault(); handleCreatePlaylist(); }}>
+                <Input
+                  value={newPlaylistName}
+                  onChange={(e) => setNewPlaylistName(e.target.value)}
+                  placeholder="Playlist Name"
+                  className="mb-4"
+                />
+                <Button type="submit">Create</Button>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
