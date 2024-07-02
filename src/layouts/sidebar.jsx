@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { CircleUser, Menu, Music } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { navItems } from "../App";
+import AudioPlayer from "@/components/AudioPlayer";
 
 const Layout = () => {
   const [playlists, setPlaylists] = useState(["My Playlist 1", "My Playlist 2", "My Playlist 3"]);
@@ -157,31 +158,7 @@ const SidebarNavLink = ({ to, children }) => (
 
 const Footer = () => (
   <footer className="flex items-center justify-between p-4 border-t bg-muted/40">
-    <div className="flex items-center gap-4">
-      <Button variant="outline" size="icon">
-        <Music className="h-5 w-5" />
-      </Button>
-      <div className="flex flex-col">
-        <span className="text-sm font-semibold">Song Title</span>
-        <span className="text-xs text-muted-foreground">Artist Name</span>
-      </div>
-    </div>
-    <div className="flex items-center gap-4">
-      <Button variant="outline" size="icon">
-        <Music className="h-5 w-5" />
-      </Button>
-      <Button variant="outline" size="icon">
-        <Music className="h-5 w-5" />
-      </Button>
-      <Button variant="outline" size="icon">
-        <Music className="h-5 w-5" />
-      </Button>
-    </div>
-    <div className="flex items-center gap-4">
-      <Button variant="outline" size="icon">
-        <Music className="h-5 w-5" />
-      </Button>
-    </div>
+    <AudioPlayer />
   </footer>
 );
 
